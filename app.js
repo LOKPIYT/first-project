@@ -221,7 +221,8 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    recipientCount.innerText = state.contacts.length;
+    if (recipientCount) recipientCount.innerText = state.contacts.length;
+    if (mobileBtnCount) mobileBtnCount.innerText = state.contacts.length;
     updateGeneratedScripts();
   }
 
