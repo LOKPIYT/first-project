@@ -38,6 +38,24 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnCopyPython = document.getElementById('btn-copy-python');
   const toast = document.getElementById('toast');
 
+  // Device Switcher Elements
+  const btnDevicePhone = document.getElementById('btn-device-phone');
+  const btnDeviceDesktop = document.getElementById('btn-device-desktop');
+  const viewModePhone = document.getElementById('view-mode-phone');
+  const viewModeDesktop = document.getElementById('view-mode-desktop');
+  const mobileBtnCount = document.getElementById('mobile-btn-count');
+
+  // Mobile Step Runner Modal Elements
+  const btnLaunchMobileRunner = document.getElementById('btn-launch-mobile-runner');
+  const mobileRunnerModal = document.getElementById('mobile-runner-modal');
+  const btnCloseModal = document.getElementById('btn-close-modal');
+  const modalFriendName = document.getElementById('modal-friend-name');
+  const modalStepCurr = document.getElementById('modal-step-curr');
+  const modalStepTotal = document.getElementById('modal-step-total');
+  const modalCopiedText = document.getElementById('modal-copied-text');
+  const modalOpenSnapBtn = document.getElementById('modal-open-snap-btn');
+  const modalNextFriendBtn = document.getElementById('modal-next-friend-btn');
+
   // Simulator Elements
   const btnSimStart = document.getElementById('btn-sim-start');
   const btnSimReset = document.getElementById('btn-sim-reset');
@@ -50,6 +68,108 @@ document.addEventListener('DOMContentLoaded', () => {
   const mockupActiveStreak = document.getElementById('mockup-active-streak');
   const mockupMessagesFeed = document.getElementById('mockup-messages-feed');
   const mockupInputBox = document.getElementById('mockup-input-box');
+
+  // ==========================================
+  // DEVICE SWITCHER (Phone vs Desktop)
+  // ==========================================
+  if (btnDevicePhone && btnDeviceDesktop) {
+    btnDevicePhone.addEventListener('click', () => {
+      btnDevicePhone.classList.add('active');
+      btnDeviceDesktop.classList.remove('active');
+      if (viewModePhone) viewModePhone.style.display = 'block';
+      if (viewModeDesktop) viewModeDesktop.style.display = 'none';
+    });
+
+    btnDeviceDesktop.addEventListener('click', () => {
+      btnDeviceDesktop.classList.add('active');
+      btnDevicePhone.classList.remove('active');
+      if (viewModeDesktop) viewModeDesktop.style.display = 'block';
+      if (viewModePhone) viewModePhone.style.display = 'none';
+    });
+  }
+
+  // ==========================================
+  // MOBILE 1-TAP RUNNER MODAL
+  // ==========================================
+  let currentMobileIndex = 0;
+
+  function updateMobileModalUI() {
+    if (state.contacts.length === 0) {
+      alert('Please add at least one recipient first!');
+      if (mobileRunnerModal) mobileRunnerModal.classList.remove('active');
+      return;
+    }
+
+    if (currentMobileIndex >= state.contacts.length) {
+      // Completed all contacts!
+      if (modalFriendName) modalFriendName.innerText = "All Sent!";
+      if (modalStepCurr) modalStepCurr.innerText = state.contacts.length;
+      if (modalStepTotal) modalStepTotal.innerText = state.contacts.length;
+      if (modalCopiedText) modalCopiedText.innerText = "🎉 All Done!";
+      if (modalOpenSnapBtn) {
+        modalOpenSnapBtn.style.display = 'none';
+      }
+      if (modalNextFriendBtn) {
+        modalNextFriendBtn.innerText = "Close Runner";
+        modalNextFriendBtn.className = "btn btn-primary";
+      }
+      showToast(`Finished sending to all ${state.contacts.length} friends!`);
+      return;
+    }
+
+    const currentContact = state.contacts[currentMobileIndex];
+    if (modalFriendName) modalFriendName.innerText = currentContact.name;
+    if (modalStepCurr) modalStepCurr.innerText = currentMobileIndex + 1;
+    if (modalStepTotal) modalStepTotal.innerText = state.contacts.length;
+    if (modalCopiedText) modalCopiedText.innerText = `"${state.message}"`;
+
+    // Automatically copy message to clipboard
+    navigator.clipboard.writeText(state.message).catch(() => {});
+
+    // Set deep link to Snapchat conversation
+    if (modalOpenSnapBtn) {
+      modalOpenSnapBtn.style.display = 'inline-flex';
+      // Official Snapchat URL scheme to launch chat directly
+      modalOpenSnapBtn.href = `snapchat://chat/${encodeURIComponent(currentContact.name)}`;
+      modalOpenSnapBtn.innerText = `📱 Open Chat with ${currentContact.name}`;
+    }
+
+    if (modalNextFriendBtn) {
+      const isLast = currentMobileIndex === state.contacts.length - 1;
+      modalNextFriendBtn.innerText = isLast ? "Finish 🎉" : `Next Friend (${state.contacts[currentMobileIndex + 1]?.name || 'Next'}) ➔`;
+      modalNextFriendBtn.className = "btn btn-secondary";
+    }
+  }
+
+  if (btnLaunchMobileRunner) {
+    btnLaunchMobileRunner.addEventListener('click', () => {
+      if (state.contacts.length === 0) {
+        alert('Please add at least one recipient first!');
+        return;
+      }
+      currentMobileIndex = 0;
+      updateMobileModalUI();
+      if (mobileRunnerModal) mobileRunnerModal.classList.add('active');
+      showToast(`Copied "${state.message}" to clipboard!`);
+    });
+  }
+
+  if (btnCloseModal) {
+    btnCloseModal.addEventListener('click', () => {
+      if (mobileRunnerModal) mobileRunnerModal.classList.remove('active');
+    });
+  }
+
+  if (modalNextFriendBtn) {
+    modalNextFriendBtn.addEventListener('click', () => {
+      if (currentMobileIndex >= state.contacts.length) {
+        if (mobileRunnerModal) mobileRunnerModal.classList.remove('active');
+        return;
+      }
+      currentMobileIndex++;
+      updateMobileModalUI();
+    });
+  }
 
   // ==========================================
   // TAB NAVIGATION
