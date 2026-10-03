@@ -68,6 +68,18 @@
 
     <!-- TAB 1: Configurator & Generator -->
     <div id="tab-config" class="tab-content active">
+      <!-- Device Switcher -->
+      <div class="device-switcher-wrap">
+        <div class="device-switcher">
+          <button class="device-btn active" id="btn-device-phone">
+            📱 I am on a Phone
+          </button>
+          <button class="device-btn" id="btn-device-desktop">
+            💻 I am on a Computer
+          </button>
+        </div>
+      </div>
+
       <div class="config-grid">
         <!-- Left: Configuration Controls -->
         <div class="card">
@@ -144,72 +156,121 @@
           </div>
         </div>
 
-        <!-- Right: Generated Bookmarklet & Quick Run -->
-        <div class="card">
-          <div class="card-header">
-            <div class="card-title">
-              <svg viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-              <span>Instant Browser Runner</span>
+        <!-- Right Column: Context-Aware Panel (Phone vs Desktop) -->
+        <div class="card" id="right-panel-runner">
+          <!-- PHONE MODE VIEW -->
+          <div id="view-mode-phone">
+            <div class="card-header">
+              <div class="card-title">
+                <svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
+                <span>Mobile 1-Tap Streak Sender</span>
+              </div>
+              <span style="font-size:11px; background:rgba(255,252,0,0.15); color:var(--snap-yellow); padding:3px 8px; border-radius:4px; font-weight:700;">Fast Mobile</span>
             </div>
-            <span style="font-size:11px; background:rgba(255,252,0,0.15); color:var(--snap-yellow); padding:3px 8px; border-radius:4px; font-weight:700;">1-Click</span>
-          </div>
 
-          <p style="font-size:13px; color:var(--text-secondary); margin-bottom:14px;">
-            The easiest way to send "." to your friends: use this 1-click Bookmarklet directly on Snapchat Web.
-          </p>
-
-          <!-- Bookmarklet Button -->
-          <div class="bookmarklet-drag-zone">
-            <a href="#" id="main-bookmarklet-link" class="bookmarklet-btn" title="Drag me to your bookmarks bar!">
-              <svg viewBox="0 0 24 24" style="width:18px; height:18px; fill:#000;"><path d="M12 2C7.58 2 4 5.58 4 10c0 2.03.76 3.87 2.01 5.27-.12.44-.32 1.15-.9 2.05-.2.31-.05.73.29.83.94.27 2.06.18 2.94-.3.97.52 2.09.85 3.26.85 1.17 0 2.29-.33 3.26-.85.88.48 2 .57 2.94.3.34-.1.49-.52.29-.83-.58-.9-.78-1.61-.9-2.05C19.24 13.87 20 12.03 20 10c0-4.42-3.58-8-8-8z"/></svg>
-              <span>👻 SnapDot (Drag to Bookmarks)</span>
-            </a>
-            <p style="font-size:11px; color:var(--text-muted); margin-top:8px;">
-              👆 Drag this button to your browser bookmarks bar!
+            <p style="font-size:13px; color:var(--text-secondary); margin-bottom:14px;">
+              Ready to send <b>"."</b> on your phone? Tap below to launch the step runner. It copies <b>"."</b> to your clipboard and opens each friend's chat in the Snapchat app!
             </p>
-          </div>
 
-          <!-- Steps -->
-          <div class="steps-list">
-            <div class="step-item">
-              <div class="step-num">1</div>
-              <div>
-                <b>Open Snapchat Web:</b> Go to <a href="https://web.snapchat.com" target="_blank" style="color:var(--snap-yellow);">web.snapchat.com</a> and make sure you're logged into your account.
+            <div style="text-align:center; padding:18px; background:rgba(0,0,0,0.25); border:1px solid rgba(255,252,0,0.3); border-radius:var(--radius-md); margin-bottom:16px;">
+              <button class="btn btn-primary" id="btn-launch-mobile-runner" style="width:100%; padding:14px; font-size:15px; font-weight:800; border-radius:30px;">
+                🚀 Start Mobile Auto-Sender (<span id="mobile-btn-count">3</span> Friends)
+              </button>
+              <p style="font-size:11px; color:var(--text-muted); margin-top:8px;">
+                ⚡ Takes under 15 seconds to send "." to all chosen contacts!
+              </p>
+            </div>
+
+            <div class="steps-list">
+              <div class="step-item">
+                <div class="step-num">1</div>
+                <div><b>Tap Start:</b> SnapDot automatically copies "." into your phone clipboard.</div>
+              </div>
+              <div class="step-item">
+                <div class="step-num">2</div>
+                <div><b>Snapchat Opens:</b> Opens directly into your friend's chat window.</div>
+              </div>
+              <div class="step-item">
+                <div class="step-num">3</div>
+                <div><b>Paste &amp; Next:</b> Tap paste and send, then tap Next for the next contact!</div>
               </div>
             </div>
-            <div class="step-item">
-              <div class="step-num">2</div>
-              <div>
-                <b>Click the Bookmark</b> (or paste the code below into browser console by pressing <kbd style="background:#222; padding:2px 4px; border-radius:3px;">F12</kbd> -> Console).
-              </div>
-            </div>
-            <div class="step-item">
-              <div class="step-num">3</div>
-              <div>
-                <b>Watch it Send:</b> The SnapDot menu pops up on Snapchat, selects your friends, and automatically sends <b>"."</b> with human-like delays!
-              </div>
+
+            <div style="margin-top:16px; padding:12px; background:var(--bg-secondary); border-radius:var(--radius-md); font-size:12px; border:1px solid var(--border-color);">
+              <span style="color:var(--snap-yellow); font-weight:700;">💡 Want 100% Hands-Free on Phone?</span>
+              <p style="color:var(--text-secondary); margin-top:4px;">
+                Open <a href="https://web.snapchat.com" target="_blank" style="color:var(--snap-yellow);">web.snapchat.com</a> in <b>Kiwi Browser</b> or Chrome Desktop Mode to run the auto-script completely untouched!
+              </p>
             </div>
           </div>
 
-          <!-- Code Box with Copy Button -->
-          <div style="margin-top:16px;">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-              <span style="font-size:11px; color:var(--text-muted); font-weight:600; text-transform:uppercase;">Bookmarklet / Console Code</span>
-              <button class="btn btn-outline btn-sm" id="btn-copy-code">📋 Copy Code</button>
+          <!-- DESKTOP / BROWSER MODE VIEW -->
+          <div id="view-mode-desktop" style="display:none;">
+            <div class="card-header">
+              <div class="card-title">
+                <svg viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                <span>Instant Browser Runner (Snapchat Web)</span>
+              </div>
+              <span style="font-size:11px; background:rgba(255,252,0,0.15); color:var(--snap-yellow); padding:3px 8px; border-radius:4px; font-weight:700;">Hands-Free</span>
             </div>
-            <div class="code-box" id="bookmarklet-code-display">
-              <!-- Code filled by JS -->
-            </div>
-          </div>
 
-          <!-- Direct Download Options -->
-          <div style="display:flex; gap:10px; margin-top:16px; flex-wrap:wrap;">
-            <a href="snapdot.user.js" download class="btn btn-secondary btn-sm" style="flex:1;">
-              📥 Download UserScript (.user.js)
-            </a>
-            <a href="snapchat_auto_dot.py" download class="btn btn-secondary btn-sm" style="flex:1;">
-              🐍 Download Python Script (.py)
-            </a>
+            <p style="font-size:13px; color:var(--text-secondary); margin-bottom:14px;">
+              The easiest hands-free way: drag this bookmarklet to your bookmarks bar and run on <a href="https://web.snapchat.com" target="_blank" style="color:var(--snap-yellow);">web.snapchat.com</a>.
+            </p>
+
+            <!-- Bookmarklet Button -->
+            <div class="bookmarklet-drag-zone">
+              <a href="#" id="main-bookmarklet-link" class="bookmarklet-btn" title="Drag me to your bookmarks bar!">
+                <svg viewBox="0 0 24 24" style="width:18px; height:18px; fill:#000;"><path d="M12 2C7.58 2 4 5.58 4 10c0 2.03.76 3.87 2.01 5.27-.12.44-.32 1.15-.9 2.05-.2.31-.05.73.29.83.94.27 2.06.18 2.94-.3.97.52 2.09.85 3.26.85 1.17 0 2.29-.33 3.26-.85.88.48 2 .57 2.94.3.34-.1.49-.52.29-.83-.58-.9-.78-1.61-.9-2.05C19.24 13.87 20 12.03 20 10c0-4.42-3.58-8-8-8z"/></svg>
+                <span>👻 SnapDot (Drag to Bookmarks)</span>
+              </a>
+              <p style="font-size:11px; color:var(--text-muted); margin-top:8px;">
+                👆 Drag this button to your browser bookmarks bar!
+              </p>
+            </div>
+
+            <!-- Steps -->
+            <div class="steps-list">
+              <div class="step-item">
+                <div class="step-num">1</div>
+                <div>
+                  <b>Open Snapchat Web:</b> Go to <a href="https://web.snapchat.com" target="_blank" style="color:var(--snap-yellow);">web.snapchat.com</a> and log in.
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-num">2</div>
+                <div>
+                  <b>Click Bookmark:</b> (or paste code into <kbd style="background:#222; padding:2px 4px; border-radius:3px;">F12</kbd> Console).
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-num">3</div>
+                <div>
+                  <b>Automatic Sending:</b> SnapDot opens conversations, types ".", and sends with safe human delays!
+                </div>
+              </div>
+            </div>
+
+            <!-- Code Box with Copy Button -->
+            <div style="margin-top:16px;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:11px; color:var(--text-muted); font-weight:600; text-transform:uppercase;">Bookmarklet / Console Code</span>
+                <button class="btn btn-outline btn-sm" id="btn-copy-code">📋 Copy Code</button>
+              </div>
+              <div class="code-box" id="bookmarklet-code-display">
+                <!-- Code filled by JS -->
+              </div>
+            </div>
+
+            <!-- Direct Download Options -->
+            <div style="display:flex; gap:10px; margin-top:16px; flex-wrap:wrap;">
+              <a href="snapdot.user.js" download class="btn btn-secondary btn-sm" style="flex:1;">
+                📥 Download UserScript (.user.js)
+              </a>
+              <a href="snapchat_auto_dot.py" download class="btn btn-secondary btn-sm" style="flex:1;">
+                🐍 Download Python Script (.py)
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -445,7 +506,39 @@
         </div>
       </div>
     </div>
-  </main>
+  <!-- Mobile Step Runner Modal -->
+  <div class="modal-overlay" id="mobile-runner-modal">
+    <div class="modal-card">
+      <button class="modal-close" id="btn-close-modal">✕</button>
+      <div style="display:inline-flex; align-items:center; gap:8px; background:rgba(255,252,0,0.15); color:var(--snap-yellow); padding:4px 12px; border-radius:20px; font-size:12px; font-weight:700; margin-bottom:12px;">
+        <span>👻 Mobile Streak Sender</span>
+      </div>
+
+      <h3 style="font-size:18px; margin-bottom:6px;">Sending to: <span id="modal-friend-name" style="color:var(--snap-yellow);">Sarah</span></h3>
+      <p style="font-size:12px; color:var(--text-muted); margin-bottom:16px;">
+        Contact <span id="modal-step-curr">1</span> of <span id="modal-step-total">3</span>
+      </p>
+
+      <div style="background:#0c0d12; border:1px solid var(--border-color); border-radius:var(--radius-md); padding:12px; margin-bottom:16px;">
+        <div style="font-size:11px; color:#888; margin-bottom:4px;">Copied Message:</div>
+        <div style="font-size:22px; font-weight:800; color:var(--snap-yellow);" id="modal-copied-text">"."</div>
+        <div style="font-size:11px; color:var(--accent-green); margin-top:4px;">✅ Automatically copied to your clipboard!</div>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <a href="#" id="modal-open-snap-btn" class="btn btn-primary" style="padding:14px; font-size:14px; font-weight:700;">
+          📱 Open Chat in Snapchat
+        </a>
+        <button id="modal-next-friend-btn" class="btn btn-secondary" style="padding:12px; font-size:13px;">
+          Next Contact ➔
+        </button>
+      </div>
+
+      <div style="font-size:11px; color:var(--text-muted); margin-top:14px;">
+        Tip: Tap 'Open Chat', paste and tap Send. Then return here and tap 'Next Contact'.
+      </div>
+    </div>
+  </div>
 
   <!-- Toast Notification -->
   <div class="toast" id="toast">Copied to clipboard!</div>
