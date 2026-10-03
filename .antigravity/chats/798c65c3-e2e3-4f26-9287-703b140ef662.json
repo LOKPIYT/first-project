@@ -4,5 +4,18 @@
   "createdAt": "2026-10-03T22:26:12.405Z",
   "filename": "798c65c3-e2e3-4f26-9287-703b140ef662.json",
   "geminiStarted": false,
-  "messages": []
+  "messages": [
+    {
+      "id": "385e7500-24fa-4700-9878-4365a61fcc6a",
+      "role": "user",
+      "content": "Make automatic sending “.”in Snapchat to someone that Ian going to choose and it kan be more then one",
+      "status": "pending",
+      "model": "gemini-3.8-flash-high",
+      "client_type": "gemini-bridge",
+      "parent_message_id": null,
+      "created_at": "2026-10-03T22:27:18.753Z",
+      "sender": "ios",
+      "is_cancelled": false
+    }
+  ]
 }
