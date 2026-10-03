@@ -2,561 +2,327 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SnapDot — Snapchat Auto "." & Streak Sender</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>SnapDot — Snapchat Auto Streak Sender</title>
+  
+  <!-- PWA Meta Tags -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#08090c">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="SnapDot">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' fill='%23FFFC00'><rect width='512' height='512' rx='128' fill='%2308090c'/><path fill='%23fffc00' d='M256 80c-75 0-136 61-136 136 0 34 13 65 34 89-2 8-5 20-15 35-3 5-1 12 5 14 16 5 35 3 50-5 19 9 39 14 62 14 23 0 43-5 62-14 15 8 34 10 50 5 6-2 8-9 5-14-10-15-13-27-15-35 21-24 34-55 34-89 0-75-61-136-136-136z'/></svg>">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23FFFC00'><path d='M12 2C7.58 2 4 5.58 4 10c0 2.03.76 3.87 2.01 5.27-.12.44-.32 1.15-.9 2.05-.2.31-.05.73.29.83.94.27 2.06.18 2.94-.3.97.52 2.09.85 3.26.85 1.17 0 2.29-.33 3.26-.85.88.48 2 .57 2.94.3.34-.1.49-.52.29-.83-.58-.9-.78-1.61-.9-2.05C19.24 13.87 20 12.03 20 10c0-4.42-3.58-8-8-8z'/></svg>">
+  
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="ambient-glow"></div>
+  <div class="app-ambient"></div>
 
-  <!-- Header -->
-  <header>
-    <div class="nav-container">
-      <a href="#" class="logo-badge">
-        <div class="snap-icon-wrap">
-          <svg viewBox="0 0 24 24">
-            <path d="M12 2C7.58 2 4 5.58 4 10c0 2.03.76 3.87 2.01 5.27-.12.44-.32 1.15-.9 2.05-.2.31-.05.73.29.83.94.27 2.06.18 2.94-.3.97.52 2.09.85 3.26.85 1.17 0 2.29-.33 3.26-.85.88.48 2 .57 2.94.3.34-.1.49-.52.29-.83-.58-.9-.78-1.61-.9-2.05C19.24 13.87 20 12.03 20 10c0-4.42-3.58-8-8-8z"/>
-          </svg>
-        </div>
-        <div class="logo-text">
-          <h1>SnapDot <span>Auto</span></h1>
-          <p>Automated Snapchat "." & Streak Sender</p>
-        </div>
-      </a>
-
-      <div class="header-status">
-        <div class="status-dot-pulse"></div>
-        <span>Ready & Safe</span>
+  <!-- Real App Header -->
+  <header class="app-header">
+    <div class="header-left">
+      <div class="app-brand-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2C7.58 2 4 5.58 4 10c0 2.03.76 3.87 2.01 5.27-.12.44-.32 1.15-.9 2.05-.2.31-.05.73.29.83.94.27 2.06.18 2.94-.3.97.52 2.09.85 3.26.85 1.17 0 2.29-.33 3.26-.85.88.48 2 .57 2.94.3.34-.1.49-.52.29-.83-.58-.9-.78-1.61-.9-2.05C19.24 13.87 20 12.03 20 10c0-4.42-3.58-8-8-8z"/></svg>
       </div>
+      <div class="brand-text">
+        <h1>SnapDot <span>Streaks</span></h1>
+        <p><span id="header-streaks-active-count">5</span> Active Streaks</p>
+      </div>
+    </div>
+
+    <div class="header-right">
+      <div class="autopilot-badge" id="btn-header-autopilot" title="Toggle 24h Auto-Pilot">
+        <div class="autopilot-pulse"></div>
+        <span>Auto-Pilot: ON</span>
+      </div>
+
+      <button class="icon-btn" id="btn-open-add-modal" title="Add Friend">
+        <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+      </button>
+
+      <button class="icon-btn" id="btn-toggle-sound" title="Mute/Unmute Audio">
+        <svg id="sound-icon-on" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+      </button>
     </div>
   </header>
 
-  <!-- Main Content -->
-  <main>
-    <!-- Hero -->
-    <section class="hero">
-      <div class="hero-pill">
-        <span>🔥 Keep All Your Streaks Alive Automatically</span>
-      </div>
-      <h2>Automatic <span>"." Sender</span> for Snapchat</h2>
-      <p>
-        Choose one or more friends and send a dot (<b>"."</b>) or custom streak message automatically.
-        Works via Snapchat Web bookmarklet, browser extension, or background Python script.
-      </p>
-    </section>
-
-    <!-- Navigation Tabs -->
-    <div class="tabs-nav">
-      <button class="tab-btn active" data-tab="config">
-        <svg viewBox="0 0 24 24"><path d="M12 15a3 3 0 100-6 3 3 0 000 6z"/><path fill-rule="evenodd" d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z"/></svg>
-        <span>1. Generator & Web Tool</span>
-      </button>
-      <button class="tab-btn" data-tab="simulator">
-        <svg viewBox="0 0 24 24"><path d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z"/></svg>
-        <span>2. Live Simulator</span>
-      </button>
-      <button class="tab-btn" data-tab="python">
-        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/></svg>
-        <span>3. Python Bot</span>
-      </button>
-      <button class="tab-btn" data-tab="mobile">
-        <svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
-        <span>4. Mobile Phone Guide</span>
-      </button>
-    </div>
-
-    <!-- TAB 1: Configurator & Generator -->
-    <div id="tab-config" class="tab-content active">
-      <!-- Device Switcher -->
-      <div class="device-switcher-wrap">
-        <div class="device-switcher">
-          <button class="device-btn active" id="btn-device-phone">
-            📱 I am on a Phone
-          </button>
-          <button class="device-btn" id="btn-device-desktop">
-            💻 I am on a Computer
-          </button>
-        </div>
-      </div>
-
-      <div class="config-grid">
-        <!-- Left: Configuration Controls -->
-        <div class="card">
-          <div class="card-header">
-            <div class="card-title">
-              <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
-              <span>Setup Your Automation</span>
+  <!-- App Main Body -->
+  <main class="app-body">
+    
+    <!-- PAGE 1: CHATS & AUTO-SENDER VIEW -->
+    <section id="page-chats" class="view-page active">
+      <div class="chats-view-container">
+        
+        <!-- Left Pane: Contact List & Auto-Sender Controls -->
+        <div class="pane-left">
+          
+          <!-- Expiring Streaks Warning Alert Bar -->
+          <div class="expiring-alert-bar" id="expiring-alert-bar">
+            <div class="expiring-info">
+              <span>⌛</span>
+              <span><b id="expiring-count-label">2</b> Streaks Expire in &lt; 4h!</span>
             </div>
-            <span class="preset-chip" id="btn-load-samples">⚡ Load Sample Friends</span>
+            <button class="btn-quick-save" id="btn-quick-save-expiring">
+              ⚡ Save Streaks Now
+            </button>
           </div>
 
-          <!-- 1. Choose Contacts -->
-          <div class="form-group">
-            <div class="form-label">
-              <span>1. Choose Snapchat Recipients (<span id="recipient-count" style="color:var(--snap-yellow);">3</span>)</span>
-              <a href="#" id="btn-clear-contacts" style="color:var(--text-muted); font-size:11px; text-decoration:none;">Clear All</a>
-            </div>
-            
-            <div class="tags-container" id="contacts-tags-box">
-              <!-- Rendered via JS -->
+          <!-- Master Auto-Sender Controller Box -->
+          <div class="sender-ctrl-box">
+            <div class="ctrl-msg-row">
+              <div class="msg-input-wrap">
+                <input type="text" id="master-msg-input" class="msg-input-field" value="." placeholder="Auto message..." />
+              </div>
+              <div class="chip-presets">
+                <button class="chip-dot active" data-msg=".">.</button>
+                <button class="chip-dot" data-msg="🔥 .">🔥 .</button>
+                <button class="chip-dot" data-msg="Streaks">Streaks</button>
+              </div>
             </div>
 
-            <div class="input-row">
-              <input type="text" id="input-new-contact" class="text-input" placeholder="Type friend's name or username (e.g. Sarah, @alex)..." />
-              <button class="btn btn-primary" id="btn-add-contact">+ Add Friend</button>
-            </div>
-            <div class="form-sublabel" style="margin-top:6px;">
-              💡 You can add as many people as you want. The tool will send to each person in order.
-            </div>
-          </div>
+            <!-- Big Action Button -->
+            <button class="btn-auto-send-main" id="btn-start-auto-send">
+              <svg viewBox="0 0 24 24" style="width:18px; height:18px; fill:#000;"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+              <span>Auto-Send "." to <span id="btn-selected-count">5</span> Friends</span>
+            </button>
 
-          <!-- 2. Message Content -->
-          <div class="form-group">
-            <div class="form-label">
-              <span>2. Message to Send</span>
-              <span class="preset-chip active" id="chip-default-dot">Default: "."</span>
-            </div>
-            <input type="text" id="input-message" class="text-input" value="." placeholder="Enter message to send..." />
-            <div class="preset-buttons">
-              <span class="preset-chip" data-msg=".">. (Single Dot)</span>
-              <span class="preset-chip" data-msg="🔥">🔥 (Flame)</span>
-              <span class="preset-chip" data-msg="🔥 .">🔥 . (Streak Dot)</span>
-              <span class="preset-chip" data-msg="Streaks .">Streaks .</span>
-              <span class="preset-chip" data-msg="Good morning .">Good morning .</span>
-            </div>
-          </div>
-
-          <!-- 3. Timing & Safety -->
-          <div class="form-group">
-            <div class="form-label">
-              <span>3. Anti-Spam Safety Delay Between People</span>
-              <span class="slider-val-badge" id="delay-label">3.0s</span>
-            </div>
-            <div class="slider-container">
-              <input type="range" id="input-delay" min="1.5" max="8" step="0.5" value="3.0" />
-              <div style="display:flex; justify-content:space-between; font-size:10px; color:var(--text-muted);">
-                <span>1.5s (Fast)</span>
-                <span>3.0s (Recommended Safe)</span>
-                <span>8.0s (Super Stealth)</span>
+            <!-- Real-time Progress Bar -->
+            <div class="send-progress-container" id="send-progress-container">
+              <div class="progress-info-row">
+                <span id="progress-status-text" style="color:var(--snap-yellow);">Sending to Sarah...</span>
+                <span id="progress-percent-text">1 / 5</span>
+              </div>
+              <div class="progress-bar-track">
+                <div class="progress-bar-fill" id="progress-bar-fill"></div>
               </div>
             </div>
           </div>
 
-          <!-- 4. Schedule -->
-          <div class="form-group">
-            <div class="form-label">
-              <span>4. Repeating Streak Schedule</span>
+          <!-- Filter & Multi-Select Bar -->
+          <div class="contacts-filter-bar">
+            <div class="search-input-box">
+              <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+              <input type="text" id="contact-search-input" class="search-field" placeholder="Search friends or usernames..." />
             </div>
-            <select id="select-schedule" class="text-input">
-              <option value="0">Send Once (Immediate Batch)</option>
-              <option value="12">Repeat Every 12 Hours</option>
-              <option value="24" selected>Repeat Every 24 Hours (Daily Streaks)</option>
+            <button class="select-all-btn" id="btn-toggle-select-all">Select All</button>
+          </div>
+
+          <!-- Scrollable Contacts List -->
+          <div class="contacts-scroll-area" id="contacts-list-container">
+            <!-- Dynamically populated contacts -->
+          </div>
+        </div>
+
+        <!-- Right Pane: Real Interactive Snapchat Conversation -->
+        <div class="pane-right" id="chat-pane-right">
+          <!-- Chat Header -->
+          <div class="chat-header">
+            <div class="chat-header-user">
+              <button class="btn-back-chat" id="btn-back-chat" title="Back to list">←</button>
+              <div class="avatar-badge-wrap" style="width:36px; height:36px;">
+                <div class="contact-avatar" id="active-chat-avatar" style="background:#f59e0b; font-size:14px;">S</div>
+              </div>
+              <div class="chat-user-meta">
+                <h3 id="active-chat-name">Sarah</h3>
+                <p id="active-chat-streak-info" style="color:#ff9800; font-weight:700;">🔥 148 Day Streak</p>
+              </div>
+            </div>
+
+            <div class="chat-header-actions">
+              <button class="icon-btn" id="btn-chat-single-send" title="Send . to this friend">
+                <span style="font-weight:900; font-size:16px; color:var(--snap-yellow);">.</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Messages Feed -->
+          <div class="chat-messages-feed" id="chat-messages-feed">
+            <!-- Populated via JS -->
+          </div>
+
+          <!-- Chat Input Bar -->
+          <div class="chat-input-bar">
+            <input type="text" id="chat-direct-input" class="chat-input-field" placeholder="Send a chat..." />
+            <button class="btn-send-message" id="btn-chat-send">
+              <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 2: AUTOPILOT SCHEDULER VIEW -->
+    <section id="page-autopilot" class="view-page">
+      <div class="autopilot-view-wrap">
+        
+        <!-- Timer Card -->
+        <div class="autopilot-timer-card">
+          <div style="font-size:12px; font-weight:700; color:var(--text-sub); text-transform:uppercase; letter-spacing:1px;">
+            Next Auto-Streak Run In
+          </div>
+          <div class="countdown-digits" id="autopilot-countdown">14:22:45</div>
+          <div style="font-size:12px; color:var(--snap-green); font-weight:700;">
+            ● 24/7 Streak Guardian Active
+          </div>
+        </div>
+
+        <!-- Automation Settings -->
+        <div class="settings-card">
+          <h3 style="font-size:15px; font-weight:800; color:#fff;">Auto-Pilot Preferences</h3>
+          
+          <div class="setting-row">
+            <div>
+              <div style="font-size:13px; font-weight:700;">Enable Automated Daily Sending</div>
+              <div style="font-size:11px; color:var(--text-sub);">Automatically sends "." every day so streaks never expire.</div>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="toggle-autopilot-master" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="setting-row">
+            <div>
+              <div style="font-size:13px; font-weight:700;">Urgent Expiring Streak Alert</div>
+              <div style="font-size:11px; color:var(--text-sub);">Prioritizes friends with &lt; 4 hours left on hourglass ⌛.</div>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="toggle-urgent-warning" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="setting-row">
+            <div>
+              <div style="font-size:13px; font-weight:700;">Safety Anti-Ban Throttle</div>
+              <div style="font-size:11px; color:var(--text-sub);">Randomizes human-like delays between contacts.</div>
+            </div>
+            <span style="font-size:13px; font-weight:700; color:var(--snap-yellow);" id="label-safety-throttle">3.0s</span>
+          </div>
+
+          <div class="setting-row">
+            <div>
+              <div style="font-size:13px; font-weight:700;">Streak Maintenance Interval</div>
+              <div style="font-size:11px; color:var(--text-sub);">Frequency of streak checks.</div>
+            </div>
+            <select id="select-interval" style="background:var(--bg-input); color:#fff; border:1px solid var(--border-subtle); border-radius:6px; padding:6px 10px; font-size:12px; outline:none;">
+              <option value="12">Every 12 Hours</option>
+              <option value="24" selected>Every 24 Hours (Recommended)</option>
             </select>
           </div>
         </div>
+      </div>
+    </section>
 
-        <!-- Right Column: Context-Aware Panel (Phone vs Desktop) -->
-        <div class="card" id="right-panel-runner">
-          <!-- PHONE MODE VIEW -->
-          <div id="view-mode-phone">
-            <div class="card-header">
-              <div class="card-title">
-                <svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
-                <span>Mobile 1-Tap Streak Sender</span>
-              </div>
-              <span style="font-size:11px; background:rgba(255,252,0,0.15); color:var(--snap-yellow); padding:3px 8px; border-radius:4px; font-weight:700;">Fast Mobile</span>
-            </div>
-
-            <p style="font-size:13px; color:var(--text-secondary); margin-bottom:14px;">
-              Ready to send <b>"."</b> on your phone? Tap below to launch the step runner. It copies <b>"."</b> to your clipboard and opens each friend's chat in the Snapchat app!
-            </p>
-
-            <div style="text-align:center; padding:18px; background:rgba(0,0,0,0.25); border:1px solid rgba(255,252,0,0.3); border-radius:var(--radius-md); margin-bottom:16px;">
-              <button class="btn btn-primary" id="btn-launch-mobile-runner" style="width:100%; padding:14px; font-size:15px; font-weight:800; border-radius:30px;">
-                🚀 Start Mobile Auto-Sender (<span id="mobile-btn-count">3</span> Friends)
-              </button>
-              <p style="font-size:11px; color:var(--text-muted); margin-top:8px;">
-                ⚡ Takes under 15 seconds to send "." to all chosen contacts!
-              </p>
-            </div>
-
-            <div class="steps-list">
-              <div class="step-item">
-                <div class="step-num">1</div>
-                <div><b>Tap Start:</b> SnapDot automatically copies "." into your phone clipboard.</div>
-              </div>
-              <div class="step-item">
-                <div class="step-num">2</div>
-                <div><b>Snapchat Opens:</b> Opens directly into your friend's chat window.</div>
-              </div>
-              <div class="step-item">
-                <div class="step-num">3</div>
-                <div><b>Paste &amp; Next:</b> Tap paste and send, then tap Next for the next contact!</div>
-              </div>
-            </div>
-
-            <div style="margin-top:16px; padding:12px; background:var(--bg-secondary); border-radius:var(--radius-md); font-size:12px; border:1px solid var(--border-color);">
-              <span style="color:var(--snap-yellow); font-weight:700;">💡 Want 100% Hands-Free on Phone?</span>
-              <p style="color:var(--text-secondary); margin-top:4px;">
-                Open <a href="https://web.snapchat.com" target="_blank" style="color:var(--snap-yellow);">web.snapchat.com</a> in <b>Kiwi Browser</b> or Chrome Desktop Mode to run the auto-script completely untouched!
-              </p>
-            </div>
+    <!-- PAGE 3: STREAK STATS & HISTORY -->
+    <section id="page-stats" class="view-page">
+      <div class="autopilot-view-wrap">
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap:12px;">
+          <div class="settings-card" style="text-align:center;">
+            <div style="font-size:26px; font-weight:900; color:var(--snap-yellow);" id="stat-streaks-saved">248</div>
+            <div style="font-size:11px; color:var(--text-sub);">Streaks Saved</div>
           </div>
+          <div class="settings-card" style="text-align:center;">
+            <div style="font-size:26px; font-weight:900; color:var(--snap-green);" id="stat-sent-today">12</div>
+            <div style="font-size:11px; color:var(--text-sub);">Sent Today</div>
+          </div>
+          <div class="settings-card" style="text-align:center;">
+            <div style="font-size:26px; font-weight:900; color:var(--snap-orange);" id="stat-longest-streak">🔥 148</div>
+            <div style="font-size:11px; color:var(--text-sub);">Longest Streak</div>
+          </div>
+        </div>
 
-          <!-- DESKTOP / BROWSER MODE VIEW -->
-          <div id="view-mode-desktop" style="display:none;">
-            <div class="card-header">
-              <div class="card-title">
-                <svg viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                <span>Instant Browser Runner (Snapchat Web)</span>
-              </div>
-              <span style="font-size:11px; background:rgba(255,252,0,0.15); color:var(--snap-yellow); padding:3px 8px; border-radius:4px; font-weight:700;">Hands-Free</span>
-            </div>
-
-            <p style="font-size:13px; color:var(--text-secondary); margin-bottom:14px;">
-              The easiest hands-free way: drag this bookmarklet to your bookmarks bar and run on <a href="https://web.snapchat.com" target="_blank" style="color:var(--snap-yellow);">web.snapchat.com</a>.
-            </p>
-
-            <!-- Bookmarklet Button -->
-            <div class="bookmarklet-drag-zone">
-              <a href="#" id="main-bookmarklet-link" class="bookmarklet-btn" title="Drag me to your bookmarks bar!">
-                <svg viewBox="0 0 24 24" style="width:18px; height:18px; fill:#000;"><path d="M12 2C7.58 2 4 5.58 4 10c0 2.03.76 3.87 2.01 5.27-.12.44-.32 1.15-.9 2.05-.2.31-.05.73.29.83.94.27 2.06.18 2.94-.3.97.52 2.09.85 3.26.85 1.17 0 2.29-.33 3.26-.85.88.48 2 .57 2.94.3.34-.1.49-.52.29-.83-.58-.9-.78-1.61-.9-2.05C19.24 13.87 20 12.03 20 10c0-4.42-3.58-8-8-8z"/></svg>
-                <span>👻 SnapDot (Drag to Bookmarks)</span>
-              </a>
-              <p style="font-size:11px; color:var(--text-muted); margin-top:8px;">
-                👆 Drag this button to your browser bookmarks bar!
-              </p>
-            </div>
-
-            <!-- Steps -->
-            <div class="steps-list">
-              <div class="step-item">
-                <div class="step-num">1</div>
-                <div>
-                  <b>Open Snapchat Web:</b> Go to <a href="https://web.snapchat.com" target="_blank" style="color:var(--snap-yellow);">web.snapchat.com</a> and log in.
-                </div>
-              </div>
-              <div class="step-item">
-                <div class="step-num">2</div>
-                <div>
-                  <b>Click Bookmark:</b> (or paste code into <kbd style="background:#222; padding:2px 4px; border-radius:3px;">F12</kbd> Console).
-                </div>
-              </div>
-              <div class="step-item">
-                <div class="step-num">3</div>
-                <div>
-                  <b>Automatic Sending:</b> SnapDot opens conversations, types ".", and sends with safe human delays!
-                </div>
-              </div>
-            </div>
-
-            <!-- Code Box with Copy Button -->
-            <div style="margin-top:16px;">
-              <div style="display:flex; justify-content:space-between; align-items:center;">
-                <span style="font-size:11px; color:var(--text-muted); font-weight:600; text-transform:uppercase;">Bookmarklet / Console Code</span>
-                <button class="btn btn-outline btn-sm" id="btn-copy-code">📋 Copy Code</button>
-              </div>
-              <div class="code-box" id="bookmarklet-code-display">
-                <!-- Code filled by JS -->
-              </div>
-            </div>
-
-            <!-- Direct Download Options -->
-            <div style="display:flex; gap:10px; margin-top:16px; flex-wrap:wrap;">
-              <a href="snapdot.user.js" download class="btn btn-secondary btn-sm" style="flex:1;">
-                📥 Download UserScript (.user.js)
-              </a>
-              <a href="snapchat_auto_dot.py" download class="btn btn-secondary btn-sm" style="flex:1;">
-                🐍 Download Python Script (.py)
-              </a>
-            </div>
+        <div class="settings-card">
+          <h3 style="font-size:14px; font-weight:800;">Recent Auto-Send Activity</h3>
+          <div id="activity-log-feed" style="display:flex; flex-direction:column; gap:8px; font-size:12px; color:var(--text-sub);">
+            <!-- Populated via JS -->
           </div>
         </div>
       </div>
+    </section>
 
-      <!-- Anti-Ban & Safety Notice -->
-      <div class="safety-banner">
-        <svg class="safety-icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
-        <div class="safety-content">
-          <h4>Smart Anti-Ban Protection Enabled</h4>
-          <p>
-            Unlike dangerous fake third-party apps that steal your credentials and get accounts banned, <b>SnapDot runs inside your official browser session on web.snapchat.com</b>. It incorporates randomized delays between messages to replicate natural human behavior and keep your account 100% safe.
+    <!-- PAGE 4: SYNC & WEB EXTENSION -->
+    <section id="page-sync" class="view-page">
+      <div class="autopilot-view-wrap">
+        <div class="settings-card">
+          <h3 style="font-size:15px; font-weight:800; color:var(--snap-yellow);">Snapchat Web Hands-Free Connector</h3>
+          <p style="font-size:12px; color:var(--text-sub); line-height:1.5;">
+            Want this auto-sender to run directly on the official <b>web.snapchat.com</b> page?
+            Use the 1-click Bookmarklet or install the Tampermonkey script!
+          </p>
+
+          <div style="display:flex; gap:10px; margin-top:10px; flex-wrap:wrap;">
+            <a href="snapdot.user.js" download class="btn-auto-send-main" style="text-decoration:none; flex:1; font-size:12px; padding:10px;">
+              📥 Install UserScript (.user.js)
+            </a>
+            <a href="snapchat_auto_dot.py" download class="icon-btn" style="width:auto; padding:10px 16px; font-size:12px; text-decoration:none;">
+              🐍 Python Playwright Bot
+            </a>
+          </div>
+        </div>
+
+        <div class="settings-card">
+          <h3 style="font-size:14px; font-weight:800;">Install SnapDot as a Phone App</h3>
+          <p style="font-size:12px; color:var(--text-sub);">
+            On iPhone / iPad: Tap the <b>Share</b> button in Safari &gt; <b>Add to Home Screen</b>.<br/>
+            On Android: Tap the <b>three dots menu</b> in Chrome &gt; <b>Install App</b>.
           </p>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- TAB 2: Live Simulator -->
-    <div id="tab-simulator" class="tab-content">
-      <div class="card" style="margin-bottom:20px;">
-        <div class="card-header">
-          <div class="card-title">
-            <svg viewBox="0 0 24 24"><path d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z"/></svg>
-            <span>Live Interactive Snapchat Web Simulator</span>
-          </div>
-          <span style="font-size:12px; color:var(--text-muted);">Preview exact automation behavior</span>
-        </div>
+  </main>
 
-        <p style="font-size:13px; color:var(--text-secondary); margin-bottom:16px;">
-          Test the automated sender in real time! Click <b>"Run Simulation"</b> below to watch the bot open conversations for your chosen friends, type the dot <b>"."</b>, deliver the message, and update the streak 🔥!
-        </p>
+  <!-- Bottom App Navigation Bar -->
+  <nav class="app-bottom-bar">
+    <button class="nav-item-btn active" data-page="chats">
+      <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
+      <span>Chats</span>
+    </button>
+    <button class="nav-item-btn" data-page="autopilot">
+      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14h-2v-2h2v2zm0-4h-2V7h2v5z"/></svg>
+      <span>Auto-Pilot</span>
+    </button>
+    <button class="nav-item-btn" data-page="stats">
+      <svg viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>
+      <span>Stats</span>
+    </button>
+    <button class="nav-item-btn" data-page="sync">
+      <svg viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46A7.93 7.93 0 0 0 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74A7.93 7.93 0 0 0 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
+      <span>Sync</span>
+    </button>
+  </nav>
 
-        <!-- Simulation Controls -->
-        <div class="sim-controls">
-          <div style="display:flex; gap:10px;">
-            <button class="btn btn-primary" id="btn-sim-start">
-              ▶ Run Simulation
-            </button>
-            <button class="btn btn-secondary" id="btn-sim-reset">
-              🔄 Reset Demo
-            </button>
-          </div>
-
-          <div class="sim-progress-wrap">
-            <div style="display:flex; justify-content:space-between; font-size:11px;">
-              <span id="sim-status-label">Ready. Click Run Simulation.</span>
-              <span id="sim-progress-text">0 / 3</span>
-            </div>
-            <div class="sim-progress-bar">
-              <div class="sim-progress-fill" id="sim-progress-fill"></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Realistic Mockup Window -->
-        <div class="mockup-window" style="margin-top:16px;">
-          <div class="mockup-browser-bar">
-            <div class="mockup-dots">
-              <div class="mockup-dot red"></div>
-              <div class="mockup-dot yellow"></div>
-              <div class="mockup-dot green"></div>
-            </div>
-            <div class="mockup-url">
-              <svg viewBox="0 0 24 24" style="width:12px; height:12px; fill:currentColor;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/></svg>
-              <span>https://web.snapchat.com/chat</span>
-            </div>
-          </div>
-
-          <div class="mockup-body">
-            <!-- Sidebar with friends -->
-            <div class="mockup-sidebar">
-              <div class="mockup-sidebar-header">
-                <span>Chats</span>
-                <span style="font-size:11px; color:var(--snap-yellow);">SnapDot Active</span>
-              </div>
-              <div class="mockup-chat-list" id="mockup-chat-list">
-                <!-- Dynamically populated from chosen contacts -->
-              </div>
-            </div>
-
-            <!-- Active Chat Pane -->
-            <div class="mockup-main-chat">
-              <div class="mockup-chat-top">
-                <div style="display:flex; align-items:center; gap:8px;">
-                  <span id="mockup-active-name">Sarah</span>
-                  <span id="mockup-active-streak" style="color:#ff9800; font-size:12px;">🔥 48</span>
-                </div>
-                <span style="font-size:11px; color:#22c55e;">Online</span>
-              </div>
-
-              <!-- Message History -->
-              <div class="mockup-messages-feed" id="mockup-messages-feed">
-                <div class="mock-msg incoming">
-                  Hey! Streaks? 🔥
-                </div>
-              </div>
-
-              <!-- Input Bar -->
-              <div class="mockup-input-bar">
-                <div class="mockup-input-box" id="mockup-input-box">Send a chat...</div>
-                <div class="mockup-send-icon" id="mockup-send-icon">
-                  <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Terminal Output -->
-        <div style="margin-top:14px;">
-          <div style="font-size:11px; color:var(--text-muted); font-weight:700; margin-bottom:6px; text-transform:uppercase;">
-            Live Simulation Console Output
-          </div>
-          <div class="sim-terminal" id="sim-terminal">
-            [SnapDot Simulator] Ready to test. Press 'Run Simulation' to start.
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- TAB 3: Python Automation Bot -->
-    <div id="tab-python" class="tab-content">
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">
-            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/></svg>
-            <span>Python Playwright Bot (Desktop / Server)</span>
-          </div>
-          <a href="snapchat_auto_dot.py" download class="btn btn-primary btn-sm">
-            📥 Download snapchat_auto_dot.py
-          </a>
-        </div>
-
-        <p style="font-size:13px; color:var(--text-secondary); margin-bottom:16px;">
-          Want to run the auto-sender completely unattended in the background on your PC, Mac, or VPS?
-          Use this lightweight Python script with Playwright. It persists your login session and automatically executes on your schedule!
-        </p>
-
-        <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:20px;">
-          <div class="step-item">
-            <div class="step-num">1</div>
-            <div>
-              <b>Install Playwright:</b> Run <code style="background:#222; padding:3px 6px; border-radius:4px; color:#fffc00;">pip install playwright &amp;&amp; playwright install chromium</code>
-            </div>
-          </div>
-          <div class="step-item">
-            <div class="step-num">2</div>
-            <div>
-              <b>Configure Contacts:</b> The contacts you selected in Tab 1 are automatically populated in the script below.
-            </div>
-          </div>
-          <div class="step-item">
-            <div class="step-num">3</div>
-            <div>
-              <b>Run the script:</b> Run <code style="background:#222; padding:3px 6px; border-radius:4px; color:#fffc00;">python snapchat_auto_dot.py</code>. It opens Snapchat Web, you log in once, and it handles the rest!
-            </div>
-          </div>
-        </div>
-
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-          <span style="font-size:12px; color:var(--text-muted); font-weight:600;">Customized Python Script:</span>
-          <button class="btn btn-secondary btn-sm" id="btn-copy-python">📋 Copy Python Code</button>
-        </div>
-        <div class="code-box" id="python-code-display" style="max-height:300px;">
-          <!-- Populated by JS -->
-        </div>
-      </div>
-    </div>
-
-    <!-- TAB 4: Mobile Phone Guide -->
-    <div id="tab-mobile" class="tab-content">
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">
-            <svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
-            <span>Mobile Phone Automation Guide (Android &amp; iOS)</span>
-          </div>
-          <span class="preset-chip">Mobile Friendly</span>
-        </div>
-
-        <p style="font-size:13px; color:var(--text-secondary); margin-bottom:16px;">
-          If you want to automate sending "." directly on your smartphone without a computer, choose your operating system below:
-        </p>
-
-        <div class="mobile-guide-grid">
-          <!-- Option A: Kiwi Browser on Android / Safari on iPhone -->
-          <div class="mobile-card">
-            <h3>🌐 Method 1: Mobile Browser Bookmarklet (Easiest)</h3>
-            <p>
-              You can run Snapchat Web directly on your phone's browser!
-            </p>
-            <ol style="padding-left:18px; font-size:12px; color:var(--text-secondary); line-height:1.6;">
-              <li>On your phone, open <b>Chrome</b>, <b>Safari</b>, or <b>Kiwi Browser</b>.</li>
-              <li>Go to <a href="https://web.snapchat.com" target="_blank" style="color:var(--snap-yellow);">web.snapchat.com</a> and enable <b>"Desktop Site"</b> in browser settings.</li>
-              <li>Log in to your Snapchat account.</li>
-              <li>Paste the SnapDot bookmarklet code into the address bar or run via developer tools.</li>
-              <li>The SnapDot floating panel appears, letting you tap <b>"Start Auto-Sending"</b>!</li>
-            </ol>
-          </div>
-
-          <!-- Option B: Android AutoClicker -->
-          <div class="mobile-card">
-            <h3>🤖 Method 2: Android Auto Clicker (Native App)</h3>
-            <p>
-              Use an accessibility-based tap recorder for the official Snapchat mobile app:
-            </p>
-            <ol style="padding-left:18px; font-size:12px; color:var(--text-secondary); line-height:1.6;">
-              <li>Download <b>Auto Clicker - Automatic tap</b> from Google Play Store (free).</li>
-              <li>Grant Accessibility permission.</li>
-              <li>Set up a multi-target sequence:
-                <br/>• Tap 1: First friend in chat list.
-                <br/>• Tap 2: Chat input box.
-                <br/>• Tap 3: Period key <b>"."</b> on keyboard.
-                <br/>• Tap 4: Send arrow button.
-                <br/>• Tap 5: Back button.
-              </li>
-              <li>Repeat for target 2, 3, etc. Save this macro and press Play anytime!</li>
-            </ol>
-          </div>
-
-          <!-- Option C: iOS Shortcuts -->
-          <div class="mobile-card">
-            <h3>🍎 Method 3: iPhone / iOS Shortcuts</h3>
-            <p>
-              Automate opening chats on iOS:
-            </p>
-            <ol style="padding-left:18px; font-size:12px; color:var(--text-secondary); line-height:1.6;">
-              <li>Open the <b>Shortcuts</b> app on iOS.</li>
-              <li>Create a new shortcut with the <b>"Open URL"</b> action.</li>
-              <li>Use Snapchat URL schemes: <code style="color:var(--snap-yellow);">snapchat://chat/[username]</code> to open directly to each chosen friend.</li>
-              <li>Use the Text action with <b>"."</b> and Copy to Clipboard, so you only tap Paste and Send!</li>
-            </ol>
-          </div>
-        </div>
-      </div>
-    </div>
-  <!-- Mobile Step Runner Modal -->
-  <div class="modal-overlay" id="mobile-runner-modal">
-    <div class="modal-card">
-      <button class="modal-close" id="btn-close-modal">✕</button>
-      <div style="display:inline-flex; align-items:center; gap:8px; background:rgba(255,252,0,0.15); color:var(--snap-yellow); padding:4px 12px; border-radius:20px; font-size:12px; font-weight:700; margin-bottom:12px;">
-        <span>👻 Mobile Streak Sender</span>
+  <!-- Modal: Add New Friend -->
+  <div class="app-modal-overlay" id="add-friend-modal">
+    <div class="app-modal-box">
+      <button class="app-modal-close" id="btn-close-add-modal">✕</button>
+      <h3 style="font-size:17px; font-weight:800; margin-bottom:14px; color:var(--snap-yellow);">+ Add Snapchat Friend</h3>
+      
+      <div class="form-field-group">
+        <label>Friend's Display Name</label>
+        <input type="text" id="new-friend-name" class="form-field-input" placeholder="e.g. Sarah" />
       </div>
 
-      <h3 style="font-size:18px; margin-bottom:6px;">Sending to: <span id="modal-friend-name" style="color:var(--snap-yellow);">Sarah</span></h3>
-      <p style="font-size:12px; color:var(--text-muted); margin-bottom:16px;">
-        Contact <span id="modal-step-curr">1</span> of <span id="modal-step-total">3</span>
-      </p>
-
-      <div style="background:#0c0d12; border:1px solid var(--border-color); border-radius:var(--radius-md); padding:12px; margin-bottom:16px;">
-        <div style="font-size:11px; color:#888; margin-bottom:4px;">Copied Message:</div>
-        <div style="font-size:22px; font-weight:800; color:var(--snap-yellow);" id="modal-copied-text">"."</div>
-        <div style="font-size:11px; color:var(--accent-green); margin-top:4px;">✅ Automatically copied to your clipboard!</div>
+      <div class="form-field-group">
+        <label>Snapchat Username</label>
+        <input type="text" id="new-friend-username" class="form-field-input" placeholder="e.g. sarah_99" />
       </div>
 
-      <div style="display:flex; flex-direction:column; gap:10px;">
-        <a href="#" id="modal-open-snap-btn" class="btn btn-primary" style="padding:14px; font-size:14px; font-weight:700;">
-          📱 Open Chat in Snapchat
-        </a>
-        <button id="modal-next-friend-btn" class="btn btn-secondary" style="padding:12px; font-size:13px;">
-          Next Contact ➔
-        </button>
+      <div class="form-field-group">
+        <label>Current Streak (Days)</label>
+        <input type="number" id="new-friend-streak" class="form-field-input" value="1" min="0" />
       </div>
 
-      <div style="font-size:11px; color:var(--text-muted); margin-top:14px;">
-        Tip: Tap 'Open Chat', paste and tap Send. Then return here and tap 'Next Contact'.
-      </div>
+      <button class="btn-auto-send-main" id="btn-save-new-friend" style="margin-top:10px;">
+        Add to Auto-Sender
+      </button>
     </div>
   </div>
 
   <!-- Toast Notification -->
-  <div class="toast" id="toast">Copied to clipboard!</div>
-
-  <!-- Footer -->
-  <footer>
-    <div style="max-width:800px; margin:0 auto; display:flex; flex-direction:column; gap:8px; align-items:center;">
-      <div><b>SnapDot</b> — Open Source Streak Keeper &amp; Auto "." Sender</div>
-      <div>Designed for educational and personal streak preservation. Respect Snapchat's Community Guidelines.</div>
-      <div style="margin-top:6px; display:flex; gap:16px;">
-        <a href="snapdot-bookmarklet.js">View Bookmarklet Source</a>
-        <span>•</span>
-        <a href="snapdot.user.js">View UserScript Source</a>
-        <span>•</span>
-        <a href="snapchat_auto_dot.py">View Python Script</a>
-      </div>
-    </div>
-  </footer>
+  <div class="app-toast" id="app-toast">Notification</div>
 
   <script src="app.js"></script>
 </body>
