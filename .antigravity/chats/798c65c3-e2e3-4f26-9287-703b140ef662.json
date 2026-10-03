@@ -3,7 +3,7 @@
   "name": "Make automatic sending “.”in Snapchat to",
   "createdAt": "2026-10-03T22:26:12.405Z",
   "filename": "798c65c3-e2e3-4f26-9287-703b140ef662.json",
-  "geminiStarted": false,
+  "geminiStarted": true,
   "messages": [
     {
       "id": "385e7500-24fa-4700-9878-4365a61fcc6a",
@@ -15,6 +15,18 @@
       "parent_message_id": null,
       "created_at": "2026-10-03T22:27:18.753Z",
       "sender": "ios",
+      "is_cancelled": false
+    },
+    {
+      "id": "47b1f46b-ce6f-456d-b2ba-f8def7d65e34",
+      "role": "agent",
+      "content": "I have created **SnapDot** — an automated Snapchat streak and message sender that lets you automatically send **\".\"** (or any custom message) to one or multiple friends of your choice.\n\n### 🌐 View the Live App:\n**[https://antigravity.luch.dev/site/e3bd3a31-da87-4f61-9f20-7cfe17762e2f/ddc84a24866e2fb73bd64cb4/](https://antigravity.luch.dev/site/e3bd3a31-da87-4f61-9f20-7cfe17762e2f/ddc84a24866e2fb73bd64cb4/)**\n\n---\n\n### What Has Been Built:\n\n1. **Multi-Recipient Selector**:\n   - Add as many friends as you want (by name or username).\n   - Add or remove contacts with a single tap, or load sample contacts to test.\n\n2. **Automated Message & Delays**:\n   - Sends **\".\"** (single dot) by default to keep streaks active.\n   - Built-in **anti-spam delay** (2 to 8 seconds with randomized human jitter) to keep your account safe from rate-limiting.\n   - Streak schedule option: **Send Once** or **Repeat Every 24 Hours**.\n\n3. **Snapchat Web 1-Click Runner ([`snapdot-bookmarklet.js`](https://github.com/LOKPIYT/first-project/blob/main/snapdot-bookmarklet.js))**:\n   - Drag the bookmarklet button or copy the code.\n   - Open [web.snapchat.com](https://web.snapchat.com) in your browser.\n   - When clicked, a floating SnapDot control panel appears right inside Snapchat Web, selects your friends, and automatically sends `.` to each one.\n\n4. **Live Interactive Simulator (Tab 2)**:\n   - A real-time visual mockup of Snapchat Web where you can press **\"Run Simulation\"** to preview how it finds your friends, types `.`, and sends it with live console output and streak increments.\n\n5. **Ready-to-Use Scripts & Files**:\n   - [`index.html`](https://github.com/LOKPIYT/first-project/blob/main/index.html) & [`style.css`](https://github.com/LOKPIYT/first-project/blob/main/style.css): The web application dashboard.\n   - [`app.js`](https://github.com/LOKPIYT/first-project/blob/main/app.js): Dynamic generator and simulator engine.\n   - [`snapdot.user.js`](https://github.com/LOKPIYT/first-project/blob/main/snapdot.user.js): Browser extension / Tampermonkey script.\n   - [`snapchat_auto_dot.py`](https://github.com/LOKPIYT/first-project/blob/main/snapchat_auto_dot.py): Standalone Python Playwright bot for background/headless automation.\n   - Mobile phone automation guide for Android (Auto Clicker / Mobile Browser) and iOS.\n\nAll changes are committed and saved to your GitHub repository. Open the link above to test it out!",
+      "status": "completed",
+      "model": "gemini-3.8-flash-high",
+      "client_type": "gemini-bridge",
+      "parent_message_id": "385e7500-24fa-4700-9878-4365a61fcc6a",
+      "created_at": "2026-10-03T22:29:49.126Z",
+      "sender": "macOS",
       "is_cancelled": false
     }
   ]
