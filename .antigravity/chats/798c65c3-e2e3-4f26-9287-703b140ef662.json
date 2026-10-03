@@ -40,6 +40,18 @@
       "created_at": "2026-10-03T22:30:46.600Z",
       "sender": "ios",
       "is_cancelled": false
+    },
+    {
+      "id": "32e18d7a-651c-413d-998a-cc39f32db305",
+      "role": "agent",
+      "content": "I have created and updated **SnapDot**, an automated tool designed specifically for sending **\".\"** to one or multiple chosen friends on Snapchat.\n\n### 🌐 Open the App:\n👉 **[https://antigravity.luch.dev/site/e3bd3a31-da87-4f61-9f20-7cfe17762e2f/ddc84a24866e2fb73bd64cb4/](https://antigravity.luch.dev/site/e3bd3a31-da87-4f61-9f20-7cfe17762e2f/ddc84a24866e2fb73bd64cb4/)**\n\n---\n\n### How It Works:\n\n#### 1. Choose Your Friends & Message\n- **Add Friends**: Type one or more friend names or usernames (e.g., `Sarah`, `Alex`, `Jake`), or separate them with commas to add them all at once.\n- **Message**: Pre-configured to send **`\".\"`** by default (or choose flame `🔥 .`).\n- **Safety Delay**: Includes customizable human-like typing delays (3.0s) so your account doesn't trigger spam filters.\n\n#### 2. Choose How You Want to Run It:\n\n* **📱 If You Are on a Phone (Fastest for Mobile):**\n  1. Open the [site](https://antigravity.luch.dev/site/e3bd3a31-da87-4f61-9f20-7cfe17762e2f/ddc84a24866e2fb73bd64cb4/) on your phone.\n  2. Tap **\"🚀 Start Mobile Auto-Sender\"**.\n  3. It automatically copies `.` to your clipboard and opens the Snapchat app directly into each friend's chat one by one!\n\n* **💻 If You Want 100% Hands-Free Automation (Snapchat Web):**\n  1. Use the **1-Click Bookmarklet** or [`snapdot.user.js`](https://github.com/LOKPIYT/first-project/blob/main/snapdot.user.js).\n  2. Go to [web.snapchat.com](https://web.snapchat.com) and click your bookmark.\n  3. A SnapDot control panel will open right inside Snapchat Web and automatically cycle through each friend, type `\".\"`, and send it.\n\n* **🎮 Live Simulator (Tab 2):**\n  - Click **\"2. Live Simulator\"** on the site to watch a real-time simulation of the bot opening chats, typing `\".\"`, and boosting streak counts.\n\n* **🐍 Python Bot (`snapchat_auto_dot.py`):**\n  - Downloadable script for running automatic streak preservation in the background on your computer every 24 hours.\n\nAll changes are committed and live on the preview site above!",
+      "status": "completed",
+      "model": "gemini-3.8-flash-high",
+      "client_type": "gemini-bridge",
+      "parent_message_id": "72039075-ab66-4c9e-a5bc-fc42608fb02f",
+      "created_at": "2026-10-03T22:32:21.801Z",
+      "sender": "macOS",
+      "is_cancelled": false
     }
   ]
 }
